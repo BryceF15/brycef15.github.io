@@ -65,7 +65,9 @@
   // If the file does not exist yet, the <img> removes itself.
   function slot(img, extraStyle) {
     img = img || {};
-    return '<div class="ph"' + (extraStyle ? ' style="' + extraStyle + '"' : "") + '>' +
+    // fit: "contain" shows the whole image (posters, schematics) instead of cropping it.
+    var cls = img.fit === "contain" ? "ph fit-contain" : "ph";
+    return '<div class="' + cls + '"' + (extraStyle ? ' style="' + extraStyle + '"' : "") + '>' +
       '<span class="ph-label"><b>Photo</b>' + esc(img.label || img.alt || "") + "</span>" +
       (img.src ? '<img src="' + esc(img.src) + '" alt="' + esc(img.alt || "") + '" loading="lazy" decoding="async" onerror="this.remove()">' : "") +
       "</div>";
@@ -355,6 +357,8 @@
         (p.how || []).map(function (h) { return "<p>" + esc(h) + "</p>"; }).join("") +
         (figs.length ? '<div class="figs">' + figs.map(function (f) { return "<figure>" + slot(f) + "<figcaption>" + esc(f.label || f.alt) + "</figcaption></figure>"; }).join("") + "</div>" : "") +
         (p.paperNote ? '<p class="note">' + esc(p.paperNote) + ' <a class="text-link" data-email-link href="#">Ask by email</a></p>' : "")) : "") +
+      (p.docs && p.docs.length ? section("Documents", (p.docs || []).map(function (d) { return '<p><a class="text-link" href="' + esc(d.href) + '" target="_blank" rel="noopener">' + esc(d.label) + icon("arrow") + "</a></p>"; }).join("")) : "") +
+      (p.credit ? section("Credit", "<p>" + esc(p.credit) + "</p>") : "") +
       "</div>" +
       '<a class="next-case" href="' + projectUrl(next) + '"><div><span>Next project</span><strong>' + esc(next.title) + "</strong></div></a>";
     main.innerHTML = html;

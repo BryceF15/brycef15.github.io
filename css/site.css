@@ -547,3 +547,8 @@ a.list-row:hover > svg { color: var(--violet); }
 /* Solid buttons on dark bands: light blue with night text (10.6:1). */
 .band-night .pill.solid, .contact-links .pill.solid { background: var(--sky); border-color: var(--sky); color: #0b0d12; }
 .band-night .pill.solid:hover, .contact-links .pill.solid:hover { background: #fff; border-color: #fff; color: #0b0d12; }
+
+/* Diagrams and posters: show the whole image on white, never crop. */
+.ph.fit-contain { background: #fff; }
+.ph.fit-contain img { object-fit: contain; padding: 10px; background: #fff; }
+.ph.fit-contain .ph-label { display: none; }
