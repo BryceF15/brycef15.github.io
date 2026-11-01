@@ -4,8 +4,8 @@
   <meta charset="utf-8">
   <!-- Security: only this site's own files may load or run (no outside
        scripts, no inline scripts, no forms, no plugins). If you ever embed
-       something from another site (e.g. a YouTube video), add its domain here. -->
-  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; media-src 'self'; font-src 'self'; connect-src 'self'; object-src 'none'; base-uri 'none'; form-action 'none'; upgrade-insecure-requests">
+       something from another site (e.g. a YouTube video), add its domain here. Cloudflare Web Analytics (injected by Cloudflare's proxy) is allowed. -->
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' https://static.cloudflareinsights.com; style-src 'self' 'unsafe-inline'; img-src 'self' data:; media-src 'self'; font-src 'self'; connect-src 'self' https://cloudflareinsights.com; object-src 'none'; base-uri 'none'; form-action 'none'; upgrade-insecure-requests">
   <meta name="referrer" content="strict-origin-when-cross-origin">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Bryce Forsgren · Mechanical Engineer</title>
@@ -14,9 +14,9 @@
   <link rel="icon" href="assets/brand/favicon.svg" type="image/svg+xml">
   <link rel="preload" href="assets/fonts/archivo-var.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="preload" href="assets/fonts/intertight-var.woff2" as="font" type="font/woff2" crossorigin>
-  <link rel="stylesheet" href="css/site.css?v=202611010504">
+  <link rel="stylesheet" href="css/site.css?v=202611010516">
   <!-- Light by default (easiest to read); remembers the visitor's toggle. -->
-  <script src="js/theme.js?v=202611010504"></script>
+  <script src="js/theme.js?v=202611010516"></script>
 </head>
 <body data-page="home">
   <a class="skip-link" href="#main">Skip to content</a>
@@ -214,8 +214,8 @@
     </div>
   </footer>
 
-  <script src="js/data.js?v=202611010504"></script>
-  <script src="js/site.js?v=202611010504"></script>
-  <script src="js/flow.js?v=202611010504"></script>
+  <script src="js/data.js?v=202611010516"></script>
+  <script src="js/site.js?v=202611010516"></script>
+  <script src="js/flow.js?v=202611010516"></script>
 </body>
 </html>
