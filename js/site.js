@@ -65,14 +65,20 @@
   // If the file does not exist yet, the <img> removes itself.
   function slot(img, extraStyle) {
     img = img || {};
-    // fit: "contain" shows the whole image (posters, schematics) instead of cropping it.
-    var cls = img.fit === "contain" ? "ph fit-contain" : "ph";
+    // The whole image always shows (object-fit: contain). A blurred copy of
+    // the same image fills any spare space behind it, so nothing is cropped.
+    // fit: "contain" = diagrams/posters: plain white behind instead of blur.
+    // cover: true = fill the box edge to edge (only where the box already has
+    //   the photo's own shape, like the photography grid).
+    var cls = "ph" + (img.fit === "contain" ? " fit-contain" : "") + (img.cover ? " fit-cover" : "");
+    var blur = !img.cover && img.fit !== "contain" && img.src
+      ? '<img class="ph-blur" src="' + esc(img.src) + '" alt="" aria-hidden="true" loading="lazy" decoding="async" onerror="this.remove()">' : "";
     // video: plays silently on loop while on screen (see initVideos); `src` is its poster frame.
     var media = img.video
       ? '<video src="' + esc(img.video) + '" poster="' + esc(img.src || "") + '" muted loop playsinline preload="none" aria-label="' + esc(img.alt || "") + '"></video><span class="vid-badge" aria-hidden="true">Video</span>'
-      : (img.src ? '<img src="' + esc(img.src) + '" alt="' + esc(img.alt || "") + '" loading="lazy" decoding="async" onerror="this.remove()">' : "");
+      : (img.src ? '<img class="ph-main" src="' + esc(img.src) + '" alt="' + esc(img.alt || "") + '" loading="lazy" decoding="async" onerror="this.remove()">' : "");
     return '<div class="' + cls + (img.video ? " has-video" : "") + '"' + (extraStyle ? ' style="' + extraStyle + '"' : "") + '>' +
-      '<span class="ph-label"><b>Photo</b>' + esc(img.label || img.alt || "") + "</span>" + media + "</div>";
+      '<span class="ph-label"><b>Photo</b>' + esc(img.label || img.alt || "") + "</span>" + blur + media + "</div>";
   }
 
   // Videos play (muted) only while visible; with reduced motion they stay
@@ -289,8 +295,8 @@
     var grid = $("[data-photos]"), dlg = $("[data-lightbox]");
     grid.innerHTML = S.photos.map(function (ph, i) {
       return '<figure class="photo reveal" style="--delay:' + (i % 3) * 70 + 'ms"><button type="button" data-photo="' + i + '" aria-label="View ' + esc(ph.title) + ' large">' +
-        slot({ src: ph.src, alt: ph.title, label: ph.title }, "aspect-ratio:" + ph.ratio) +
-        "</button><figcaption><span>" + esc(ph.title) + "</span><span>" + esc(ph.place || "") + "</span></figcaption></figure>";
+        slot({ src: ph.src, alt: ph.title, label: "", cover: true }, "aspect-ratio:" + ph.ratio) +
+        "</button></figure>";
     }).join("");
 
     // Lightbox with arrow-key and button navigation.
@@ -298,8 +304,9 @@
     function show(i) {
       cur = (i + S.photos.length) % S.photos.length;
       var ph = S.photos[cur];
-      dlg.innerHTML = slot({ src: ph.src, alt: ph.title, label: ph.title }, "aspect-ratio:" + ph.ratio) +
-        '<div class="lightbox-bar"><span>' + esc(ph.title) + ' <span class="tnum">· ' + (cur + 1) + " / " + S.photos.length + "</span></span>" +
+      // The photo keeps its own shape: portrait stays portrait, landscape stays landscape.
+      dlg.innerHTML = '<img class="lb-img" src="' + esc(ph.src) + '" alt="' + esc(ph.title) + '" style="aspect-ratio:' + ph.ratio + '">' +
+        '<div class="lightbox-bar"><span class="tnum">' + (cur + 1) + " / " + S.photos.length + "</span>" +
         '<span style="display:flex;gap:8px"><button class="pill icon" data-lb="-1" aria-label="Previous photo">' + icon("chevL") + '</button><button class="pill icon" data-lb="1" aria-label="Next photo">' + icon("chevR") +
         '</button><button class="pill" data-lb="close">Close</button></span></div>';
     }

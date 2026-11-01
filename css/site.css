@@ -417,7 +417,7 @@ a.list-row:hover > svg { color: var(--violet); }
 .ba-tag { position: absolute; top: 14px; z-index: 2; padding: 5px 11px; font-size: .8125rem; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; background: #0b0d12; color: #fff; border-radius: var(--radius); pointer-events: none; }
 .ba-tag.l { left: 14px; } .ba-tag.r { right: 14px; }
 
-.lightbox { border: 0; padding: 0; max-width: min(92vw, 1400px); max-height: 92vh; background: transparent; color: #fff; overflow: visible; }
+.lightbox { border: 0; padding: 0; max-width: 94vw; max-height: 96vh; background: transparent; color: #fff; overflow: visible; }
 .lightbox::backdrop { background: rgb(5 7 11 / .94); }
 .lightbox[open] { animation: lb-in .4s var(--ease-out) both; }
 @keyframes lb-in { from { opacity: 0; transform: scale(.97); } }
@@ -472,7 +472,7 @@ a.list-row:hover > svg { color: var(--violet); }
 .case-meta div { padding-top: 16px; border-top: 3px solid #bfe3ff; display: grid; gap: 6px; align-content: start; }
 .case-meta dt { font-size: .8125rem; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; color: var(--on-night-2); }
 .case-meta dd { font-size: 1.0625rem; line-height: 1.4; color: #fff; }
-.case-hero { margin-top: clamp(-40px, -3vw, -24px); aspect-ratio: 16 / 8; position: relative; z-index: 2; }
+.case-hero { margin-top: clamp(-40px, -3vw, -24px); aspect-ratio: 16 / 9; max-height: 80vh; width: 100%; position: relative; z-index: 2; }
 .case-hero-wrap { background: linear-gradient(var(--hero-b) 50%, var(--paper) 50%); padding-top: 0; }
 .case-body { display: grid; grid-template-columns: minmax(0, 3fr) minmax(0, 7fr); gap: 28px clamp(32px, 5vw, 88px); padding: clamp(56px, 7vw, 100px) 0; }
 .case-body > h2 { font-family: var(--font-display); font-stretch: 118%; font-weight: 700; text-transform: uppercase; font-size: 1.25rem; letter-spacing: .03em; padding-top: 6px; }
@@ -568,3 +568,16 @@ a.list-row:hover > svg { color: var(--violet); }
 .ba-tabs { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 22px; }
 .ba-tabs .pill[aria-pressed="true"] { background: var(--ink); border-color: var(--ink); color: var(--paper); }
 .photo figcaption span:last-child { color: var(--ink-2); }
+
+/* ---- Show whole images, never crop -------------------------------
+   .ph-main: the real image, scaled to fit entirely inside its box.
+   .ph-blur: a soft, darkened copy of the same image filling the spare
+   space behind it. Grid photos (.fit-cover) already have their own shape,
+   so they fill edge to edge. */
+.ph img.ph-main { z-index: 1; object-fit: contain; }
+.ph img.ph-blur { object-fit: cover; filter: blur(24px) saturate(1.15) brightness(.82); transform: scale(1.2); }
+.ph.fit-cover img.ph-main { object-fit: cover; }
+.ph video { object-fit: contain; z-index: 1; }
+
+/* Lightbox: the photo keeps its true shape and fits the screen. */
+.lightbox .lb-img { display: block; width: auto; height: auto; max-width: 92vw; max-height: 82vh; margin: 0 auto; border-radius: var(--radius); background: #1b2130; }
