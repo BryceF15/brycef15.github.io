@@ -2,6 +2,11 @@
 <html lang="en" data-motion="on">
 <head>
   <meta charset="utf-8">
+  <!-- Security: only this site's own files may load or run (no outside
+       scripts, no inline scripts, no forms, no plugins). If you ever embed
+       something from another site (e.g. a YouTube video), add its domain here. -->
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; media-src 'self'; font-src 'self'; connect-src 'self'; object-src 'none'; base-uri 'none'; form-action 'none'; upgrade-insecure-requests">
+  <meta name="referrer" content="strict-origin-when-cross-origin">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Bryce Forsgren · Mechanical Engineer</title>
   <meta name="description" content="Bryce Forsgren, MIT mechanical engineering. Composite structures, precision mechanisms, thermal-fluid systems and vehicle testing.">
@@ -9,9 +14,9 @@
   <link rel="icon" href="assets/brand/favicon.svg" type="image/svg+xml">
   <link rel="preload" href="assets/fonts/archivo-var.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="preload" href="assets/fonts/intertight-var.woff2" as="font" type="font/woff2" crossorigin>
-  <link rel="stylesheet" href="css/site.css?v=202611010142">
+  <link rel="stylesheet" href="css/site.css?v=202611010504">
   <!-- Light by default (easiest to read); remembers the visitor's toggle. -->
-  <script>(function(){try{var t=localStorage.getItem("bf-theme");if(t==="dark")document.documentElement.dataset.theme="dark";}catch(e){}})();</script>
+  <script src="js/theme.js?v=202611010504"></script>
 </head>
 <body data-page="home">
   <a class="skip-link" href="#main">Skip to content</a>
@@ -61,7 +66,6 @@
          behind the flow field. -->
     <section class="hero" id="top" aria-labelledby="hero-title">
       <div class="hero-media" aria-hidden="true">
-        <img src="assets/img/hero.jpg" alt="" onerror="this.remove()">
       </div>
       <canvas class="flow" aria-hidden="true"></canvas>
       <div class="hero-shade" aria-hidden="true"></div>
@@ -210,8 +214,8 @@
     </div>
   </footer>
 
-  <script src="js/data.js?v=202611010142"></script>
-  <script src="js/site.js?v=202611010142"></script>
-  <script src="js/flow.js?v=202611010142"></script>
+  <script src="js/data.js?v=202611010504"></script>
+  <script src="js/site.js?v=202611010504"></script>
+  <script src="js/flow.js?v=202611010504"></script>
 </body>
 </html>

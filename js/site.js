@@ -63,6 +63,14 @@
 
   // An image slot: a labelled placeholder with the real <img> on top.
   // If the file does not exist yet, the <img> removes itself.
+  // A missing image file removes itself, leaving the labelled placeholder.
+  // (One listener here instead of inline onerror="" attributes, which the
+  // Content Security Policy blocks.)
+  document.addEventListener("error", function (e) {
+    var t = e.target;
+    if (t && t.tagName === "IMG" && t.closest(".ph")) t.remove();
+  }, true);
+
   function slot(img, extraStyle) {
     img = img || {};
     // The whole image always shows (object-fit: contain). A blurred copy of
@@ -72,11 +80,11 @@
     //   the photo's own shape, like the photography grid).
     var cls = "ph" + (img.fit === "contain" ? " fit-contain" : "") + (img.cover ? " fit-cover" : "");
     var blur = !img.cover && img.fit !== "contain" && img.src
-      ? '<img class="ph-blur" src="' + esc(img.src) + '" alt="" aria-hidden="true" loading="lazy" decoding="async" onerror="this.remove()">' : "";
+      ? '<img class="ph-blur" src="' + esc(img.src) + '" alt="" aria-hidden="true" loading="lazy" decoding="async">' : "";
     // video: plays silently on loop while on screen (see initVideos); `src` is its poster frame.
     var media = img.video
       ? '<video src="' + esc(img.video) + '" poster="' + esc(img.src || "") + '" muted loop playsinline preload="none" aria-label="' + esc(img.alt || "") + '"></video><span class="vid-badge" aria-hidden="true">Video</span>'
-      : (img.src ? '<img class="ph-main" src="' + esc(img.src) + '" alt="' + esc(img.alt || "") + '" loading="lazy" decoding="async" onerror="this.remove()">' : "");
+      : (img.src ? '<img class="ph-main" src="' + esc(img.src) + '" alt="' + esc(img.alt || "") + '" loading="lazy" decoding="async">' : "");
     return '<div class="' + cls + (img.video ? " has-video" : "") + '"' + (extraStyle ? ' style="' + extraStyle + '"' : "") + '>' +
       '<span class="ph-label"><b>Photo</b>' + esc(img.label || img.alt || "") + "</span>" + blur + media + "</div>";
   }
