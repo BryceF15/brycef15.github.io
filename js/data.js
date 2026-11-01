@@ -256,7 +256,6 @@ window.SITE = {
       images: [
         { src: "assets/img/membrane-cart/perfboard-wired.jpg", alt: "The fully wired perf board: purple PCA9548A multiplexer with every sensor channel run to the header", label: "The finished, fully wired sensor board" },
         { src: "assets/img/membrane-cart/perfboard-diagram.png", alt: "KiCad wiring schematic: Arduino Uno connected to a PCA9548A I2C multiplexer perf board serving six flow sensors", label: "Perf board wiring schematic (KiCad)", fit: "contain" },
-        { src: "assets/img/membrane-cart/perfboard-front.jpg", alt: "The perf board partway through wiring", label: "Partway through the wiring" },
         { src: "assets/img/membrane-cart/perfboard-back.jpg", alt: "Solder side of the perf board", label: "Solder side" },
         { src: "assets/img/membrane-cart/perfboard-soldering.jpg", alt: "The board mid-build in the soldering station", label: "Mid-build" },
       ],
