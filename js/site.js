@@ -67,10 +67,28 @@
     img = img || {};
     // fit: "contain" shows the whole image (posters, schematics) instead of cropping it.
     var cls = img.fit === "contain" ? "ph fit-contain" : "ph";
-    return '<div class="' + cls + '"' + (extraStyle ? ' style="' + extraStyle + '"' : "") + '>' +
-      '<span class="ph-label"><b>Photo</b>' + esc(img.label || img.alt || "") + "</span>" +
-      (img.src ? '<img src="' + esc(img.src) + '" alt="' + esc(img.alt || "") + '" loading="lazy" decoding="async" onerror="this.remove()">' : "") +
-      "</div>";
+    // video: plays silently on loop while on screen (see initVideos); `src` is its poster frame.
+    var media = img.video
+      ? '<video src="' + esc(img.video) + '" poster="' + esc(img.src || "") + '" muted loop playsinline preload="none" aria-label="' + esc(img.alt || "") + '"></video><span class="vid-badge" aria-hidden="true">Video</span>'
+      : (img.src ? '<img src="' + esc(img.src) + '" alt="' + esc(img.alt || "") + '" loading="lazy" decoding="async" onerror="this.remove()">' : "");
+    return '<div class="' + cls + (img.video ? " has-video" : "") + '"' + (extraStyle ? ' style="' + extraStyle + '"' : "") + '>' +
+      '<span class="ph-label"><b>Photo</b>' + esc(img.label || img.alt || "") + "</span>" + media + "</div>";
+  }
+
+  // Videos play (muted) only while visible; with reduced motion they stay
+  // paused on their poster and show controls instead.
+  function initVideos(scope) {
+    var vids = $$("video", scope || document);
+    if (!vids.length) return;
+    if (reduced || !("IntersectionObserver" in window)) { vids.forEach(function (v) { v.controls = true; v.preload = "metadata"; }); return; }
+    var io = new IntersectionObserver(function (entries) {
+      entries.forEach(function (en) {
+        var v = en.target;
+        if (en.isIntersecting) { var p = v.play(); if (p && p.catch) p.catch(function () { v.controls = true; }); }
+        else v.pause();
+      });
+    }, { threshold: 0.35 });
+    vids.forEach(function (v) { io.observe(v); });
   }
   function projectUrl(p) { return "project.html?p=" + encodeURIComponent(p.slug); }
   function statusChip(st) {
@@ -393,5 +411,6 @@
   initTheme();
   initMenu();
   initNavState();
+  initVideos();
   initReveal();
 })();
