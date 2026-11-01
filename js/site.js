@@ -318,17 +318,34 @@
     });
 
     // Before / after editing comparison.
-    var E = S.edit, box = $("[data-edit]");
-    if (E && box) {
-      box.innerHTML = "<div><h3>" + esc(E.title) + "</h3><p>" + esc(E.note) + "</p></div>" +
-        '<div class="ba">' + slot({ src: E.before, alt: "Unedited photo", label: "Before · straight out of camera" }) +
-        '<div class="ph after">' + '<span class="ph-label" style="left:auto;text-align:right"><b>Photo</b>After · final edit</span>' +
-        '<img src="' + esc(E.after) + '" alt="Edited photo" loading="lazy" onerror="this.remove()"></div>' +
+    // Several pairs share one slider; the tabs swap which pair is shown.
+    var E = S.edits || [], box = $("[data-edit]");
+    if (E.length && box) {
+      box.innerHTML = "<div><h3>Raw to finished</h3><p>" + esc(S.editNote || "") + "</p>" +
+        '<div class="ba-tabs" role="group" aria-label="Choose a photo to compare">' +
+        E.map(function (e, i) { return '<button type="button" class="pill" data-ba="' + i + '" aria-pressed="' + (i === 0) + '">' + esc(e.title) + "</button>"; }).join("") +
+        "</div></div>" +
+        '<div class="ba-wrap"><div class="ba">' +
+        '<div class="ph before"><img alt="" decoding="async"></div>' +
+        '<div class="ph after"><img alt="" decoding="async"></div>' +
         '<span class="ba-tag l">Before</span><span class="ba-tag r">After</span>' +
         '<input type="range" min="0" max="100" value="50" aria-label="Compare before and after">' +
-        '<span class="ba-handle" aria-hidden="true"></span></div>';
+        '<span class="ba-handle" aria-hidden="true"></span></div></div>';
       var ba = $(".ba", box), range = $("input", ba);
+      var imgB = $(".before img", ba), imgA = $(".after img", ba);
+      function pick(i) {
+        var e = E[i];
+        ba.style.aspectRatio = e.ratio || 0.75;
+        imgB.src = e.before; imgB.alt = e.title + ", unedited";
+        imgA.src = e.after; imgA.alt = e.title + ", edited";
+        $$("[data-ba]", box).forEach(function (b) { b.setAttribute("aria-pressed", String(+b.getAttribute("data-ba") === i)); });
+        range.value = 50; ba.style.setProperty("--pos", "50%");
+      }
+      box.addEventListener("click", function (ev) {
+        var b = ev.target.closest("[data-ba]"); if (b) pick(+b.getAttribute("data-ba"));
+      });
       range.addEventListener("input", function () { ba.style.setProperty("--pos", range.value + "%"); });
+      pick(0);
     }
   }
 

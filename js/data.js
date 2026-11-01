@@ -551,23 +551,31 @@ window.SITE = {
 
 
   /* ---------------------------------------------------------------- */
-  // Up to ~20 photos. `ratio` is width / height, used for the placeholder.
+  // Photographs. `ratio` is width / height. `place` is optional; leave it
+  // "" unless you know where the shot was taken. All files in
+  // assets/img/photos have had their metadata (EXIF, GPS, camera) removed.
   photos: [
-    { src: "assets/img/photos/01.jpg", title: "Bokeh study", place: "", ratio: 0.8 },
-    { src: "assets/img/photos/02.jpg", title: "Perspective", place: "", ratio: 1.5 },
-    { src: "assets/img/photos/03.jpg", title: "Coastline", place: "", ratio: 1.5 },
-    { src: "assets/img/photos/04.jpg", title: "Facade", place: "", ratio: 0.75 },
-    { src: "assets/img/photos/05.jpg", title: "Night lights", place: "", ratio: 1.33 },
-    { src: "assets/img/photos/06.jpg", title: "Stairwell", place: "", ratio: 0.8 },
-    { src: "assets/img/photos/07.jpg", title: "Landscape", place: "", ratio: 1.78 },
-    { src: "assets/img/photos/08.jpg", title: "Reflections", place: "", ratio: 1 },
-    { src: "assets/img/photos/09.jpg", title: "Skyline", place: "", ratio: 1.5 },
+    { src: "assets/img/photos/canyon.jpg", title: "Canyon rim", place: "", ratio: 0.75 },
+    { src: "assets/img/photos/strawberry.jpg", title: "Strawberry, submerged", place: "", ratio: 0.848 },
+    { src: "assets/img/photos/telluride-after.jpg", title: "Above Telluride", place: "Telluride, Colorado", ratio: 0.751 },
+    { src: "assets/img/photos/dunes.jpg", title: "Dunes under a storm", place: "", ratio: 0.894 },
+    { src: "assets/img/photos/stapler-after.jpg", title: "Stapler in bokeh", place: "", ratio: 0.776 },
+    { src: "assets/img/photos/asphalt-sunset.jpg", title: "Sunset at road level", place: "", ratio: 0.75 },
+    { src: "assets/img/photos/double-exposure.jpg", title: "Double exposure", place: "", ratio: 0.968 },
+    { src: "assets/img/photos/leaf-after.jpg", title: "Through the leaf", place: "", ratio: 0.762 },
+    { src: "assets/img/photos/silhouette.jpg", title: "Last light", place: "", ratio: 0.75 },
+    { src: "assets/img/photos/bb8-after.jpg", title: "BB-8 in bokeh", place: "", ratio: 0.83 },
+    { src: "assets/img/photos/flare.jpg", title: "Light through a window", place: "", ratio: 0.75 },
+    { src: "assets/img/photos/palms.jpg", title: "Palms at dusk", place: "", ratio: 0.75 },
+    { src: "assets/img/photos/doorway.jpg", title: "Stone doorway", place: "", ratio: 0.75 },
   ],
-  // One before/after pair to show editing.
-  edit: {
-    before: "assets/img/photos/edit-before.jpg",
-    after: "assets/img/photos/edit-after.jpg",
-    title: "Raw to finished",
-    note: "Drag across to compare the straight-out-of-camera frame with the final edit.",
-  },
+  // Before / after editing comparisons. Visitors switch between them with
+  // the tabs above the slider. Add or remove pairs freely.
+  edits: [
+    { title: "Through the leaf", before: "assets/img/photos/leaf-before.jpg", after: "assets/img/photos/leaf-after.jpg", ratio: 0.762 },
+    { title: "Stapler", before: "assets/img/photos/stapler-before.jpg", after: "assets/img/photos/stapler-after.jpg", ratio: 0.776 },
+    { title: "BB-8", before: "assets/img/photos/bb8-before.jpg", after: "assets/img/photos/bb8-after.jpg", ratio: 0.83 },
+    { title: "Telluride", before: "assets/img/photos/telluride-before.jpg", after: "assets/img/photos/telluride-after.jpg", ratio: 0.751 },
+  ],
+  editNote: "Drag across each frame to compare the photo straight out of the camera with the finished edit. Pick a pair with the buttons.",
 };
