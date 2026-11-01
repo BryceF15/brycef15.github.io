@@ -581,3 +581,25 @@ a.list-row:hover > svg { color: var(--violet); }
 
 /* Lightbox: the photo keeps its true shape and fits the screen. */
 .lightbox .lb-img { display: block; width: auto; height: auto; max-width: 92vw; max-height: 82vh; margin: 0 auto; border-radius: var(--radius); background: #1b2130; }
+
+/* ---- Selected work: big project cards -------------------------------
+   One grid of cards, each a single link with one preview image.
+   2 per row on wide screens, 1 on phones. */
+.cards { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: clamp(28px, 3.4vw, 48px) clamp(20px, 2.6vw, 36px); }
+.card { display: flex; flex-direction: column; color: inherit; text-decoration: none; border-radius: var(--radius); }
+.card-media { position: relative; aspect-ratio: 4 / 3; border-radius: var(--radius); overflow: hidden; }
+.card-media .ph { position: absolute; inset: 0; transition: transform 1s var(--ease-out); }
+.card:hover .card-media .ph { transform: scale(1.03); }
+.card-body { padding: 20px 2px 0; display: flex; flex-direction: column; gap: 10px; flex: 1; }
+.card .meta { font-size: .9375rem; color: var(--ink-2); }
+.card h3 { font-family: var(--font-display); font-stretch: 118%; font-weight: 700; text-transform: uppercase; font-size: clamp(1.45rem, 2.1vw, 2rem); line-height: 1; letter-spacing: -.005em; }
+.card-sum { color: var(--ink-2); font-size: 1.0625rem; line-height: 1.5; max-width: 52ch; }
+.card-go { margin-top: auto; padding-top: 6px; display: inline-flex; align-items: center; gap: 8px; font-weight: 700; color: var(--link); }
+.card-go svg { width: 16px; height: 16px; transition: transform .4s var(--ease-out); }
+.card:hover .card-go svg { transform: translate(3px, -3px); }
+.card:hover h3 { color: var(--link); }
+.card:focus-visible { outline: 3px solid var(--link); outline-offset: 6px; }
+/* A project with no photos gets a cobalt panel with its organization name. */
+.card-noimg { background: linear-gradient(135deg, var(--hero-a), var(--hero-b)); display: grid; place-items: center; }
+.card-noimg span { font-family: var(--font-display); font-stretch: 125%; font-weight: 800; text-transform: uppercase; font-size: clamp(2.4rem, 5vw, 4.2rem); color: transparent; -webkit-text-stroke: 1.5px rgb(255 255 255 / .7); letter-spacing: .02em; }
+@media (max-width: 760px) { .cards { grid-template-columns: minmax(0, 1fr); } }

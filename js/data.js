@@ -210,6 +210,7 @@ window.SITE = {
     {
       slug: "spacex-dragon",
       group: "also",
+      last: true,            // no photos, so it sits at the end of the grid
       title: "Dragon final integration, SpaceX",
       short: "Designed thruster cluster covers in Siemens NX and built tools that cut daily closeout work from 15–30 minutes to under 30 seconds.",
       where: "SpaceX · Cape Canaveral",
@@ -227,9 +228,7 @@ window.SITE = {
       ],
       why: "Thruster clusters are exposed during processing, and one accidental impact can mean a long, expensive replacement. Closeouts are on the critical path to launch, so minutes spent chasing paperwork add up across a mission.",
       how: [],
-      images: [
-        { src: "assets/img/spacex-dragon/hero.jpg", alt: "Dragon final integration work", label: "Hero · photo cleared for public use" },
-      ],
+      images: [],            // no photos yet; add { src, alt, label } here to show one
     },
     {
       slug: "membrane-cart",

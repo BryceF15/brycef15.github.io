@@ -9,7 +9,7 @@
   <link rel="icon" href="assets/brand/favicon.svg" type="image/svg+xml">
   <link rel="preload" href="assets/fonts/archivo-var.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="preload" href="assets/fonts/intertight-var.woff2" as="font" type="font/woff2" crossorigin>
-  <link rel="stylesheet" href="css/site.css?v=202611010138">
+  <link rel="stylesheet" href="css/site.css?v=202611010142">
   <!-- Light by default (easiest to read); remembers the visitor's toggle. -->
   <script>(function(){try{var t=localStorage.getItem("bf-theme");if(t==="dark")document.documentElement.dataset.theme="dark";}catch(e){}})();</script>
 </head>
@@ -116,15 +116,11 @@
       <div class="container">
         <div class="section-head reveal">
           <h2 id="work-title">Selected <span class="hl">work</span></h2>
-          <p>Four projects start to finish: what I built, what I did myself, and what came out of it.</p>
+          <p>Everything I've designed and built so far. Pick one to see what I did, how it works and what came out of it.</p>
         </div>
-        <div data-featured></div>
-        <div class="also">
-          <h3 class="subhead">Also built</h3>
-          <div data-also></div>
-        </div>
+        <!-- Project cards are built from js/data.js (projects). -->
+        <div class="cards" data-projects></div>
       </div>
-      <div class="peek" data-peek aria-hidden="true"></div>
     </section>
 
     <!-- ===================== NOW BUILDING (cobalt) ===================== -->
@@ -214,8 +210,8 @@
     </div>
   </footer>
 
-  <script src="js/data.js?v=202611010138"></script>
-  <script src="js/site.js?v=202611010138"></script>
-  <script src="js/flow.js?v=202611010138"></script>
+  <script src="js/data.js?v=202611010142"></script>
+  <script src="js/site.js?v=202611010142"></script>
+  <script src="js/flow.js?v=202611010142"></script>
 </body>
 </html>

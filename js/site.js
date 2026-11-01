@@ -215,23 +215,26 @@
     var P = S.person;
     var line = $("[data-person-line]"); if (line) line.textContent = P.line;
 
-    var featured = S.projects.filter(function (p) { return p.group === "featured"; });
-    $("[data-featured]").innerHTML = featured.map(function (p, i) {
-      return '<article class="feature reveal' + (i % 2 ? " flip" : "") + '">' +
-        '<a class="feature-media" href="' + projectUrl(p) + '" tabindex="-1" aria-hidden="true">' + slot(p.images[0]) + "</a>" +
-        '<div class="feature-body">' +
+    // Selected work: one grid of big project cards. Each card is a single
+    // link with one preview image (the project's first image, or a video's
+    // poster frame). Order: "featured" first, then "also" in the order they
+    // appear in data.js. Set `last: true` on a project to push it to the end.
+    var work = S.projects.filter(function (p) { return p.group === "featured"; })
+      .concat(S.projects.filter(function (p) { return p.group === "also"; }));
+    work = work.filter(function (p) { return !p.last; }).concat(work.filter(function (p) { return p.last; }));
+    $("[data-projects]").innerHTML = work.map(function (p, i) {
+      var im = p.images && p.images[0];
+      var media = im && im.src
+        ? slot({ src: im.src, alt: "", fit: im.fit })
+        : '<div class="ph card-noimg" aria-hidden="true"><span>' + esc(p.where.split(" · ")[0]) + "</span></div>";
+      return '<a class="card reveal" style="--delay:' + (i % 2) * 80 + 'ms" href="' + projectUrl(p) + '">' +
+        '<div class="card-media">' + media + "</div>" +
+        '<div class="card-body">' +
           '<p class="meta">' + esc(p.where) + " · " + esc(p.when) + "</p>" +
-          '<h3><a href="' + projectUrl(p) + '">' + esc(p.title) + "</a></h3>" +
-          '<p class="result">' + esc(p.result) + "</p>" +
-          '<ul class="did">' + p.did.slice(0, 3).map(function (d) { return "<li>" + esc(d) + "</li>"; }).join("") + "</ul>" +
-          '<p class="tags">' + p.tags.map(function (t) { return "<span>" + esc(t) + "</span>"; }).join("") + "</p>" +
-          '<p><a class="text-link" href="' + projectUrl(p) + '">Read the case study' + icon("arrow") + "</a></p>" +
-        "</div></article>";
-    }).join("");
-
-    var also = S.projects.filter(function (p) { return p.group === "also"; });
-    $("[data-also]").innerHTML = also.map(function (p) {
-      return '<a class="list-row" data-peek-slug="' + esc(p.slug) + '" href="' + projectUrl(p) + '"><div><strong>' + esc(p.title) + "</strong><em>" + esc(p.where) + " · " + esc(p.when) + "</em></div><span>" + esc(p.short) + "</span>" + icon("arrow") + "</a>";
+          "<h3>" + esc(p.title) + "</h3>" +
+          '<p class="card-sum">' + esc(p.short || p.result || "") + "</p>" +
+          '<span class="card-go">See the project' + icon("arrow") + "</span>" +
+        "</div></a>";
     }).join("");
 
     var building = S.projects.filter(function (p) { return p.group === "building"; });
@@ -389,7 +392,7 @@
         '<div class="case-status">' + statusChip(p.status) + '<span class="tags">' + (p.tags || []).map(function (t) { return "<span>" + esc(t) + "</span>"; }).join("") + "</span></div>" +
         '<dl class="case-meta">' + meta.filter(function (m) { return m[1]; }).map(function (m) { return "<div><dt>" + m[0] + "</dt><dd>" + esc(m[1]) + "</dd></div>"; }).join("") + "</dl>" +
       "</div></header>" +
-      '<div class="case-hero-wrap"><div class="container"><div class="case-hero">' + slot(p.images && p.images[0], "height:100%") + "</div></div></div>" +
+      (p.images && p.images[0] && p.images[0].src ? '<div class="case-hero-wrap"><div class="container"><div class="case-hero">' + slot(p.images[0], "height:100%") + "</div></div></div>" : "") +
       '<div class="container">' +
       section(p.group === "building" ? "Where it stands" : "Outcome", '<p class="case-outcome">' + esc(outcome) + "</p>" +
         (p.next ? '<p style="margin-top:18px"><b>Next:</b> ' + esc(p.next) + " · " + esc(p.nextDate) + "</p>" : "")) +
